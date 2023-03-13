@@ -14,25 +14,30 @@ DATA = [
     (1.1, "Not an integer")
 ]
 
+primes = []
 
 def prime_factors(number):
     if not isinstance(number, int):
         return "Not an integer"
     factors = []
-    primes = []
     if number >= 1:
         factors.append(1)
     while number > 1:
         if number % 2 == 0:
             factors.append(2)
             number = number / 2
-        if number == 3:
-            factors.append(3)
-            number = number / 3
-        if number % 2 != 0 and number % 3 != 0 and number != 1:
-            primes.append(number)
-            factors.append(number)
-            number = number / number
+        if number % 2 != 0 and number != 1:
+            no_prime_factor = True
+            if len(primes) > 0:
+                for p in primes:
+                    if number % p == 0:
+                        no_prime_factor = False
+                        factors.append(p)
+                        number = number / p
+            if no_prime_factor:
+                primes.append(number)
+                factors.append(number)
+                number = number / number
     return factors
 
 
