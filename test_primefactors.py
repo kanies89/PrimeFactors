@@ -1,4 +1,4 @@
-import pandas as pd
+from functools import wraps
 
 NUMBERS = [
     (1, [1]),
@@ -22,6 +22,16 @@ DATA = [
 primes = []
 
 
+def check_input(func):
+    @wraps(func)
+    def wrapper(number):
+        if not isinstance(number, int):
+            raise ValueError("Not an integer")
+        return func(number)
+
+    return wrapper
+
+
 def calculate_primes(num_given):
     global primes
     for num in range(3, num_given + 1):
@@ -33,10 +43,9 @@ def calculate_primes(num_given):
                 primes = list(set(primes))
 
 
+@check_input
 def prime_factors(number):
     global primes
-    if not isinstance(number, int):
-        return "Not an integer"
 
     factors = []
     if number >= 1:
