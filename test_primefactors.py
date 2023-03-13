@@ -2,7 +2,7 @@ NUMBERS = [
     (1, [1]),
     (2, [1, 2]),
     (3, [1, 3]),
-    (4, [1, 2, 4])
+    (4, [1, 2, 2])
 ]
 
 DATA = [
@@ -11,15 +11,18 @@ DATA = [
 
 
 def prime_factors(number):
+    if not isinstance(number, int):
+        return "Not an integer"
     factors = []
-    if number == 1:
+    if number >= 1:
         factors.append(1)
-    if number == 2:
-        factors.append(1)
-        factors.append(2)
-    if number == 3:
-        factors.append(1)
-        factors.append(3)
+    while number > 1:
+        if number % 2 == 0:
+            factors.append(2)
+            number = number / 2
+        if number == 3:
+            factors.append(3)
+            number = number / 3
     return factors
 
 
